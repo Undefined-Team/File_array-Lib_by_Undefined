@@ -12,7 +12,7 @@ int     ud_file_write_ctr(char *path, ud_arr *content, int flag)
     {
         char resolved_path[PATH_MAX];
         if (!realpath(path, resolved_path))
-            ud_ut_error("Couldn't resolve absolute path.");
+            ud_ut_error("Couldn't resolve absolute path from %s.", path);
         ud_ut_error("Couldn't create file %s, check that the provided path exists.", resolved_path);
     }
     char    *t_content_val = (char *)content->val;
@@ -20,7 +20,8 @@ int     ud_file_write_ctr(char *path, ud_arr *content, int flag)
     if (w_ret == -1)
     {
         char resolved_path[PATH_MAX];
-        realpath(path, resolved_path);
+        if (!realpath(path, resolved_path))
+            ud_ut_error("Couldn't resolve absolute path from %s.", path);
         ud_ut_error("Couldn't write to file %s.", resolved_path);
     }
     return (w_ret);
