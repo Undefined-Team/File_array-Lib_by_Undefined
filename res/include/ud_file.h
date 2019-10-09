@@ -9,6 +9,7 @@
 #include <limits.h> // for PATH_MAX
 #include <ud_array.h>
 #include <ud_string.h>
+#include <ud_string_array.h>
 
 // Macro
 # define ud_file_write(path, content)           ud_file_write_ctr(path, content, 0)

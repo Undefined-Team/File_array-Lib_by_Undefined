@@ -7,4 +7,4 @@ do
     lib="$pparam $lib"
 done
 gcc test.c $lib -lud_file -o executable
-./executable
+./executable -lud_array_string

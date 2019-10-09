@@ -1,5 +1,6 @@
 #include <ud_file.h>
 #include <ud_array.h>
+#include <ud_string_array.h>
 #include <assert.h>
 
 int byte_cmp(void *tens, void *arr, size_t len)
@@ -17,7 +18,7 @@ int byte_cmp(void *tens, void *arr, size_t len)
 int main(void)
 {
     ud_arr *ret = ud_file_read("./a26");
-    ud_arr *wri = ud_str_fill('a', 26);
+    ud_arr *wri = ud_stra_fill('a', 26);
     
     ud_ut_time("%s", "Starting tests...");
     // Basic tests
