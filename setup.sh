@@ -165,25 +165,27 @@ function start_recursive {
     ! $dep_recursive && { success_print "All done" "\t"; }
 
     # 2 - Preprocessing
-    ! $dep_recursive && { info_print "\n (2) Preprocessing"; }
-    for pparam in "$@"
-    do
-        # If fclean parameter detected, fclean project
-        if [[ $pparam == "fclean" ]] ; then
-            make -C "$location" fclean > /dev/null 2>&1
-            is_error $? && { error_print "Can't make fclean in $location folder" "\t"; }
-            success_print "Make fclean in [ $location ] folder" "\t"
-        # If libclean parameter detected, remove main lib folder (Full reset)
-        elif [[ $pparam == "libclean" ]] ; then
-            !(rm -rf "$ud_lib_path") && { error_print "Can't remove main lib folder" "\t"; }
-            success_print "Main lib folder removed" "\t"
-        elif [[ $pparam == "noupdate" ]] ; then
-            noupdate=true
-        elif [[ $pparam == "nodepmake" ]] ; then
-            nodepmake=true
-        fi
-    done
-    ! $dep_recursive && { success_print "All done" "\t"; }
+    if ! $dep_recursive ; then
+        info_print "\n (2) Preprocessing"
+        for pparam in "$@"
+        do
+            # If fclean parameter detected, fclean project
+            if [[ $pparam == "fclean" ]] ; then
+                make -C "$location" fclean > /dev/null 2>&1
+                is_error $? && { error_print "Can't make fclean in $location folder" "\t"; }
+                success_print "Make fclean in [ $location ] folder" "\t"
+            # If libclean parameter detected, remove main lib folder (Full reset)
+            elif [[ $pparam == "libclean" ]] ; then
+                !(rm -rf "$ud_lib_path") && { error_print "Can't remove main lib folder" "\t"; }
+                success_print "Main lib folder removed" "\t"
+            elif [[ $pparam == "noupdate" ]] ; then
+                noupdate=true
+            elif [[ $pparam == "nodepmake" ]] ; then
+                nodepmake=true
+            fi
+        done
+        success_print "All done" "\t"
+    fi
 
     # 3 - Check update
     ! $dep_recursive && { info_print "\n (3) Check if need update"; }
@@ -288,9 +290,6 @@ function start_recursive {
                 success_print "Dependency is installing..." "\t"
             fi
             ret=$(start_recursive "dep_recursive" "$actual_folder")
-            # elif ! $nodepmake ; then
-            #     ret=$(start_recursive "dep_recursive" "$actual_folder")
-            # fi
             is_error $? && { error_print "Can't scan dependency [ $name ] <-> [ $link ]" "\t"; }
             dep_tree="$dep_tree$ret\n"
         fi
@@ -303,7 +302,7 @@ function start_recursive {
     ! $dep_recursive && { success_print "All done" "\t"; }
 
     # 8 - Install
-    if [ ! $dep_recursive ] || [ ! $nodepmake ] ; then
+    if ! $dep_recursive || ! $nodepmake ; then
         ! $dep_recursive && { info_print "\n (8) Start compiling"; }
         # Copy headers in main lib folder
         if [ ! -f "$ud_lib_path"/include/ud_"$target_name".h ] || [[ $(diff "$location"/res/include/ud_"$target_name".h "$ud_lib_path"/include/ud_"$target_name".h) != "" ]] ; then
