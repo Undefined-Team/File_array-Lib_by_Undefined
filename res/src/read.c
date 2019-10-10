@@ -14,7 +14,7 @@ ud_arr  *ud_file_read(char *path)
 
     while ((len = read(fd, t_buf_val, buf_size)) > 0)
     {
-        buf->len = len;
+        buf->len = len - 1;
         ud_arr *content_tmp = ud_stra_join(content, buf);
         ud_arr_free(content);
         content = content_tmp;
