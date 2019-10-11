@@ -7,7 +7,7 @@ int     ud_file_write_ctr(char *path, ud_arr *content, int flag)
     
     if (!flag && !access(path, F_OK))
         remove(path);
-    int     fd = open(path, O_RDWR | O_CREAT | flag);
+    int     fd = open(path, O_RDWR | O_CREAT | flag, 0777);
     if (fd == -1)
     {
         char resolved_path[PATH_MAX];
