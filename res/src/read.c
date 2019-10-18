@@ -7,8 +7,8 @@ ud_arr  *ud_file_read(char *path)
         return (NULL);
     
     size_t  buf_size = 4096;
-    ud_arr  *content = ud_arr_init(sizeof(char), 1);
-    ud_arr  *buf = ud_arr_init(sizeof(char), buf_size);
+    ud_arr  *content = ud_arr_tinit(ud_stra_type_char(), 1);
+    ud_arr  *buf = ud_arr_tinit(ud_stra_type_char(), buf_size);
     char    *t_buf_val = (char *)buf->val;
     size_t  len = 0;
 

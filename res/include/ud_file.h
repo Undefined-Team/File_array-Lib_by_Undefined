@@ -7,8 +7,8 @@
 #include <fcntl.h> // for open
 #include <stdlib.h> // for realpath
 #include <limits.h> // for PATH_MAX
-#include <ud_array.h>
-#include <ud_string.h>
+// #include <ud_array.h>
+// #include <ud_string.h>
 #include <ud_string_array.h>
 
 // Macro
