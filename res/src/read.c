@@ -1,5 +1,10 @@
 #include "ud_file.h"
 
+typedef struct  uds_file_read_list {
+    char *data;
+    struct uds_file_read_list *next;
+}               ud_file_read_list;
+
 ud_arr  *ud_file_read(char *path)
 {
     int     fd = open(path, O_RDONLY);
@@ -10,20 +15,20 @@ ud_arr  *ud_file_read(char *path)
     char    buf[buf_size];
     size_t  len = 0;
     size_t  total_len = 0;
-    ud_list *buf_list = NULL;
-    ud_list *curr = NULL;
+    ud_file_read_list *buf_list = NULL;
+    ud_file_read_list *curr = NULL;
 
     while ((len = read(fd, buf, buf_size)) > 0)
     {
-        if ((!buf_list && !(buf_list = ud_list_init(buf))) || (curr && !(curr = ud_list_add_last(curr, buf))))
+        if ((!buf_list && !(buf_list = ud_list_init(ud_file_read_list, data = buf))) || (curr && !(curr = ud_list_push_last(ud_file_read_list, curr, data = buf))))
             return NULL;
         total_len += len;
     }
 
     ud_arr  *content = ud_arr_tinit(ud_stra_type_char(), total_len + 1);
     char    *t_content_val = (char *)content->val;
-    ud_list *buf_list_tmp = buf_list;
-    ud_list *tmp_free;
+    ud_file_read_list *buf_list_tmp = buf_list;
+    ud_file_read_list *tmp_free;
 
     while (buf_list_tmp)
     {
