@@ -40,6 +40,7 @@ ud_arr  *ud_file_read(char *path)
         ud_mem_cpy_rd(t_content_val, (char *)curr->data, curr->next ? buf_size : total_len % buf_size);
         curr = curr->next;
     }
+    *t_content_val = '\0';
     ud_list_free(buf_list);
 
     return content;

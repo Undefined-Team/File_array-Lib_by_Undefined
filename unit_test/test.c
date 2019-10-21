@@ -17,7 +17,7 @@ int byte_cmp(void *tens, void *arr, size_t len)
 
 int main(void)
 {
-    ud_arr *ret = ud_file_read("./network.csv");
+    ud_arr *ret = ud_file_read("./a26");
     printf("%s\n", (char *)ret->val);
     ud_arr *wri = ud_stra_fill('a', 26);
     
@@ -25,7 +25,7 @@ int main(void)
     // Basic tests
     assert(ud_file_read("./fewfefef") == NULL);
     assert(ud_file_read("./dewdew/dewdew") == NULL);
-    byte_cmp(ret->val, wri->val, 26);
+    assert(byte_cmp(ret->val, wri->val, 26));
     // assert(ud_file_write("./test", wri) == 26);
     // ud_ut_time("%s", "All tests passed.");
     ud_arr_free(ret);
