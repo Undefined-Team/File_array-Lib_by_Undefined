@@ -17,7 +17,7 @@ ud_arr  *ud_file_read(char *path)
     while ((len = read(fd, t_buf_val, buf_size)) > 0)
     {
         buf->len = len;
-        if ((!buf_list && !buf_list = ud_list_init(buf)) || (curr && !curr = ud_list_add_last(curr, buf)))
+        if ((!buf_list && !(buf_list = ud_list_init(buf))) || (curr && !(curr = ud_list_add_last(curr, buf))))
             return NULL;
         total_len += len;
     }
