@@ -27,12 +27,11 @@ ud_arr  *ud_file_read(char *path)
 
     while (buf_list_tmp)
     {
-        char *list_data = (char *)buf_list_tmp->data;
-        ud_mem_cpy_rd(t_content_val, list_data, buf_list_tmp->next ? 4096 : total_len % 4096);
+        ud_mem_cpy_rd(t_content_val, (char *)buf_list_tmp->data, buf_list_tmp->next ? 4096 : total_len % 4096);
         tmp_free = buf_list_tmp;
         buf_list_tmp = buf_list_tmp->next;
         ud_ut_free(tmp_free);
     }
-    
+
     return content;
 }
