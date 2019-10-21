@@ -27,4 +27,7 @@ int main(void)
     assert(byte_cmp(ret->val, wri->val, 26));
     assert(ud_file_write("./test", wri) == 26);
     ud_ut_time("%s", "All tests passed.");
+    ud_arr_free(ret);
+    ud_arr_free(wri);
+    ud_arr_type_free();
 }
