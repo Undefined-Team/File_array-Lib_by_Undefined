@@ -18,7 +18,7 @@ int byte_cmp(void *tens, void *arr, size_t len)
 int main(void)
 {
     ud_arr *ret = ud_file_read("./network.csv");
-    // ud_arr_print(ret);
+    printf("%s\n", (char *)ret->val);
     ud_arr *wri = ud_stra_fill('a', 26);
     
     ud_ut_time("%s", "Starting tests...");
