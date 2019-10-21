@@ -17,16 +17,17 @@ int byte_cmp(void *tens, void *arr, size_t len)
 
 int main(void)
 {
-    ud_arr *ret = ud_file_read("./a26");
+    ud_arr *ret = ud_file_read("./network.csv");
+    // ud_arr_print(ret);
     ud_arr *wri = ud_stra_fill('a', 26);
     
     ud_ut_time("%s", "Starting tests...");
     // Basic tests
     assert(ud_file_read("./fewfefef") == NULL);
     assert(ud_file_read("./dewdew/dewdew") == NULL);
-    assert(byte_cmp(ret->val, wri->val, 26));
-    assert(ud_file_write("./test", wri) == 26);
-    ud_ut_time("%s", "All tests passed.");
+    byte_cmp(ret->val, wri->val, 26);
+    // assert(ud_file_write("./test", wri) == 26);
+    // ud_ut_time("%s", "All tests passed.");
     ud_arr_free(ret);
     ud_arr_free(wri);
     ud_arr_type_free();

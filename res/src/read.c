@@ -1,10 +1,5 @@
 #include "ud_file.h"
 
-typedef struct  uds_file_read_list {
-    char *data;
-    struct uds_file_read_list *next;
-}               ud_file_read_list;
-
 ud_arr  *ud_file_read(char *path)
 {
     int     fd = open(path, O_RDONLY);
@@ -15,29 +10,37 @@ ud_arr  *ud_file_read(char *path)
     char    buf[buf_size];
     size_t  len = 0;
     size_t  total_len = 0;
+typedef struct  uds_file_read_list {
+    void            (*fp_free)(void *val);
+    struct uds_file_read_list *next;
+    char data[buf_size];
+}               ud_file_read_list;
+
     ud_file_read_list *buf_list = NULL;
     ud_file_read_list *curr = NULL;
 
+    len = read(fd, buf, buf_size);
+    total_len += len;
+    buf_list = ud_list_minit(ud_file_read_list);
+    ud_mem_cpy(buf_list->data, buf, len);
+    curr = buf_list;
     while ((len = read(fd, buf, buf_size)) > 0)
     {
-        if ((!buf_list && (!(buf_list = ud_list_init(ud_file_read_list, data = buf)) || !(curr = buf_list)))
-        || (curr && !(curr = ud_list_push_last(ud_file_read_list, curr, data = buf))))
-            return NULL;
+        curr = ud_list_mpush_last(ud_file_read_list, curr);
+        ud_mem_cpy(curr->data, buf, len);
         total_len += len;
     }
 
     ud_arr  *content = ud_arr_tinit(ud_stra_type_char(), total_len + 1);
     char    *t_content_val = (char *)content->val;
-    ud_file_read_list *buf_list_tmp = buf_list;
-    ud_file_read_list *tmp_free;
+    curr = buf_list;
 
-    while (buf_list_tmp)
+    while (curr)
     {
-        ud_mem_cpy_rd(t_content_val, (char *)buf_list_tmp->data, buf_list_tmp->next ? 4096 : total_len % 4096);
-        tmp_free = buf_list_tmp;
-        buf_list_tmp = buf_list_tmp->next;
-        ud_ut_free(tmp_free);
+        ud_mem_cpy_rd(t_content_val, (char *)curr->data, curr->next ? buf_size : total_len % buf_size);
+        curr = curr->next;
     }
+    ud_list_free(buf_list);
 
     return content;
 }
