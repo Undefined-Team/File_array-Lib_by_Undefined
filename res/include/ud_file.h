@@ -13,6 +13,7 @@
 // Macro
 # define ud_file_write(path, content)           ud_file_write_ctr(path, content, 0)
 # define ud_file_write_append(path, content)    ud_file_write_ctr(path, content, O_APPEND)
+# define ud_file_exists(path)                   ({ fd = open(path, O_RDONLY); ud_bool exists = !path || access(path, R_OK) || (read(fd, NULL, 0) == -1); close(fd); exists })
 # define BUF_SIZE                               4096
 
 // Structures
