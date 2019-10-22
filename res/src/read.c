@@ -32,7 +32,7 @@ ud_arr  *ud_file_read(char *path)
         total_len += len;
     }
 
-    ud_arr  *content = ud_arr_tinit(ud_stra_type_char(), total_len + 1);
+    ud_arr  *content = ud_arr_tinit(ud_arr_type_char(), total_len + 1);
     char    *t_content_val = (char *)content->val;
     curr = buf_list;
     while (curr)
