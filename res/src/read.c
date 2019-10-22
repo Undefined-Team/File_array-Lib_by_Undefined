@@ -27,7 +27,7 @@ ud_arr  *ud_file_read(char *path)
     curr = buf_list;
     while ((len = read(fd, buf, buf_size)) > 0)
     {
-        curr = ud_list_mpush(ud_file_read_list, curr);
+        curr = ud_list_mpush(curr);
         ud_mem_cpy(curr->data, buf, len);
         total_len += len;
     }
