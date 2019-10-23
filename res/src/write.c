@@ -24,5 +24,6 @@ int     ud_file_write_ctr(char *path, ud_arr *content, int flag)
             ud_ut_error("Couldn't resolve absolute path from %s.", path);
         ud_ut_error("Couldn't write to file %s.", resolved_path);
     }
+    close(fd);
     return (w_ret);
 }

@@ -42,5 +42,6 @@ ud_arr  *ud_file_read(char *path)
     *t_content_val = '\0';
     ud_list_free(buf_list);
 
+    close(fd);
     return content;
 }
