@@ -21,5 +21,6 @@
 // Prototypes
 ud_arr  *ud_file_read(char *path);
 int     ud_file_write_ctr(char *path, ud_arr *content, int flag);
+void    ud_file_clear(char *path);
 
 #endif
