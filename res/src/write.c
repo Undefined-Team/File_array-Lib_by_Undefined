@@ -1,6 +1,6 @@
 #include "ud_file_array.h"
 
-int     ud_file_write_ctr(char *path, ud_arr *content, int flag)
+int     ud_filea_write_ctr(char *path, ud_arr *content, int flag)
 {
     if (!path)
         return (-1);

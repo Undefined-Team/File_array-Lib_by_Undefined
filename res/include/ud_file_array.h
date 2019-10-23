@@ -11,16 +11,15 @@
 #include <ud_list.h>
 
 // Macro
-# define ud_file_write(path, content)           ud_file_write_ctr(path, content, 0)
-# define ud_file_write_append(path, content)    ud_file_write_ctr(path, content, O_APPEND)
-# define ud_file_exists(_path)                  ({ int _fd = open(_path, O_RDONLY); ud_bool _exists = !(!_path || access(_path, R_OK) || (read(_fd, NULL, 0) == -1)); close(_fd); _exists; })
-# define BUF_SIZE                               4096
+# define ud_file_array_write(path, content)         ud_file_write_ctr(path, content, 0)
+# define ud_file_array_write_append(path, content)  ud_file_write_ctr(path, content, O_APPEND)
+# define BUF_SIZE                                   4096
 
 // Structures
 
 // Prototypes
-ud_arr  *ud_file_read(char *path);
-int     ud_file_write_ctr(char *path, ud_arr *content, int flag);
-void    ud_file_clear(char *path);
+ud_arr  *ud_file_array_read(char *path);
+int     ud_file_array_write_ctr(char *path, ud_arr *content, int flag);
+void    ud_file_array_clear(char *path);
 
 #endif

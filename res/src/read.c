@@ -1,6 +1,6 @@
 #include "ud_file_array.h"
 
-ud_arr  *ud_file_read(char *path)
+ud_arr  *ud_filea_read(char *path)
 {
     int     fd = open(path, O_RDONLY);
     if (!path || access(path, R_OK) || read(fd, NULL, 0) == -1)
