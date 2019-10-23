@@ -1,5 +1,5 @@
-#ifndef UD_FILE_H
-# define UD_FILE_H
+#ifndef UD_FILE_ARRAY_H
+# define UD_FILE_ARRAY_H
 
 // Lib
 #include <unistd.h> // for read and write
