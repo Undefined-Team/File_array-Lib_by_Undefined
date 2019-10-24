@@ -19,7 +19,6 @@
 
 // Prototypes
 ud_arr  *ud_filea_read(char *path);
-int     ud_filea_write_ctr(char *path, ud_arr *content, int flag);
 void    ud_filea_clear(char *path);
 
 #endif
